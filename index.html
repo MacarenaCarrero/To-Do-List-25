@@ -7,6 +7,42 @@
     <title>Document</title>
   </head>
   <body>
+    <header class="header">
+      <div class="container-title">
+        <h1 class="title">TODO</h1>
+        <img class="icon-moon" src="./images/icon-moon.svg" alt="" />
+      </div>
+    </header>
+    <main class="main">
+      <form id="form" class="form">
+        <input
+          type="text"
+          class="text-todolist"
+          id="text-todolist"
+          placeholder="Create a new todo..."
+        />
+        <label for="text-todolist" class="label-todolist"></label>
+      </form>
+      <div id="list"></div>
+      <div class="containerList">
+        <span id="taskCounter">No hay tareas</span>
+        <span id="taskClear">Limpiar completadas</span>
+      </div>
+      <div id="filters" class="buttonFilters">
+        <button data-filter="all" class="button buttonCheck">Todo</button>
+        <button data-filter="active" class="button buttonCheck">Activo</button>
+        <button data-filter="completed" class="button buttonCheck">
+          Completado
+        </button>
+      </div>
+      <span class="intructionReorderList">Arrastra y reordena la lista</span>
+    </main>
     <script src="./js/scripts.js"></script>
   </body>
 </html>
+
+<!-- <div class="checkBox">
+  <input id="listElements" type="checkbox" class="input-checkBox" />
+  <label for="listElements" class="textLabel"></label>
+  <img class="cross" src="./images/icon-cross.svg" alt="" />
+</div> -->
