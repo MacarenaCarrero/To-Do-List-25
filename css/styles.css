@@ -20,7 +20,8 @@ nav ul {
 }
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Lexend Deca", sans-serif;
+  color: #9495A5;
 }
 .header{
   background-image: url(../images/bg-mobile-light.jpg);
@@ -38,4 +39,113 @@ body {
   align-items: center;
   color: white;
   padding: 48px 24px;
+}
+.main{
+  position: absolute;
+  top: 122px;
+}
+.label-todolist {
+  position: relative;
+  color: grey;
+}
+.label-todolist::before {
+  content: "";
+  position: absolute;
+  border: solid 1px grey;
+  border-radius: 50px;
+  width: 20px;
+  height: 20px;
+  top: -3px;
+  right: 310px;
+}
+.text-todolist{
+  height: 51px;
+  width: 327px;
+  border-radius: 5px;
+  margin: 0 18px 16px;
+  padding-left: 52px;
+  bottom: 86px;
+  outline: none;
+  border: none;
+}
+.containerList{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 51px;
+  margin: 0 24px 16px;
+}
+.buttonFilters{
+  height: 48px;
+  margin: 0 24px;
+  display: flex;
+  justify-content: center;
+}
+.button {
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+}
+.intructionReorderList{
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+.checkBox{
+  display: flex;
+  align-items: center;
+  color:grey;
+  background-color: purple;
+  padding: 20px;
+  margin: 0 24px;
+  height: 52px;
+  border-radius: 5px 5px 0 0;
+}
+.input-checkBox{
+display: none;
+}
+
+.input-checkBox:checked + .input-checkBox::before {
+  content: "";
+  border: none;
+  background: rgb(107, 255, 248);
+  width: 24px;
+  height: 24px;
+}
+.input-checkBox:checked + .input-checkBox::after {
+  content: "";
+  position: absolute;
+  background-image: url(../images/icon-check.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 10px;
+  left: -3px;
+  top: 2px;
+  
+}
+.input-checkBox:checked + .input-checkBox {
+  text-decoration: line-through;
+}
+.textLabel{
+  position: relative;
+  padding-left: 25px;
+  display: inline-block;
+}
+.textLabel::before{
+  content: "";
+  position: absolute;
+  border: 1px solid grey;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  left: 10px;
+  top: 10px;
+}
+.cross{
+  margin-left: auto;
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
 }
