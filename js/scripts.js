@@ -1,121 +1,117 @@
-const tasks = [];
+const formElement = document.getElementById('form');
+const inputElement = document.getElementById('text-todolist');
+const todoListElement = document.getElementById('list');
+const taskCounterElement = document.getElementById('taskCounter');
+const clearCompletedButton = document.getElementById('taskClear');
+const filtersElement = document.getElementById('filters');
+const modeChangeElement = document.querySelector('.moon'); // la imagen del icono de modo
+
+let allTasks = [];
+let darkMode = false;
 let currentFilter = 'all';
 
-// Elementos del DOM
-const form = document.getElementById('form');
-const input = document.getElementById('text-todolist');
-const listContainer = document.getElementById('list');
-const taskCounter = document.getElementById('taskCounter');
-const taskClear = document.getElementById('taskClear');
-const filters = document.getElementById('filters');
+// --------------------- FUNCIONES ---------------------
 
-// ------------------------------
-// FUNCIONES
-// ------------------------------
+const createTask = event => {
+  event.preventDefault();
+  if (inputElement.value === '') return;
 
-function addTask(taskText) {
-  tasks.push({
+  allTasks.push({
     id: Date.now(),
-    name: taskText,
+    name: inputElement.value,
     completed: false
   });
-  renderTasks();
-}
 
-function toggleTask(id) {
-  const task = tasks.find(t => t.id === id);
-  if (task) {
-    task.completed = !task.completed;
-    renderTasks();
+  insertTasks();
+};
+
+const insertTasks = () => {
+  todoListElement.textContent = '';
+  inputElement.value = '';
+
+  let filteredTasks = allTasks;
+
+  if (currentFilter === 'active') {
+    filteredTasks = allTasks.filter(task => !task.completed);
+  } else if (currentFilter === 'completed') {
+    filteredTasks = allTasks.filter(task => task.completed);
   }
-}
-
-function deleteTask(id) {
-  const index = tasks.findIndex(t => t.id === id);
-  if (index !== -1) {
-    tasks.splice(index, 1);
-    renderTasks();
-  }
-}
-
-function clearCompletedTasks() {
-  for (let i = tasks.length - 1; i >= 0; i--) {
-    if (tasks[i].completed) tasks.splice(i, 1);
-  }
-  renderTasks();
-}
-
-function setFilter(filter) {
-  currentFilter = filter;
-  renderTasks();
-}
-
-function updateCounter() {
-  const activeCount = tasks.filter(t => !t.completed).length;
-  taskCounter.textContent = activeCount === 0 ? 'No hay tareas' : `${activeCount} tareas activas`;
-}
-
-function renderTasks() {
-  listContainer.textContent = '';
-
-  const filteredTasks = tasks.filter(task => {
-    if (currentFilter === 'active') return !task.completed;
-    if (currentFilter === 'completed') return task.completed;
-    return true;
-  });
 
   filteredTasks.forEach(task => {
-    const taskEl = document.createElement('div');
-    taskEl.className = 'task-item';
+    const taskContainer = document.createElement('div');
+    taskContainer.classList.add('task-container');
+    taskContainer.dataset.id = task.id;
 
-    taskEl.innerHTML = `
-      <input type="checkbox" id="${task.id}" ${task.completed ? 'checked' : ''} />
-      <label for="${task.id}" class="${task.completed ? 'completed' : ''}">${task.name}</label>
-      <img src="./images/icon-cross.svg" data-id="${task.id}" alt="Eliminar" class="cross" />
-    `;
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.classList.add('input-checkBox');
+    checkbox.checked = task.completed;
+    checkbox.dataset.id = task.id;
+    checkbox.id = task.id;
+    checkbox.addEventListener('click', () => toggleTask(task.id));
 
-    listContainer.appendChild(taskEl);
+    const label = document.createElement('label');
+    label.classList.add('textLabel');
+    label.htmlFor = task.id;
+    label.textContent = task.name;
+
+    const deleteButton = document.createElement('img');
+    deleteButton.classList.add('cross');
+    deleteButton.src = './images/icon-cross.svg';
+    deleteButton.alt = 'Eliminar tarea';
+    deleteButton.addEventListener('click', () => deleteTask(task.id));
+
+    taskContainer.append(checkbox, label, deleteButton);
+    todoListElement.append(taskContainer);
   });
 
-  updateCounter();
-}
+  updateTaskCounter();
+};
 
-// ------------------------------
-// EVENTOS
-// ------------------------------
+const toggleTask = id => {
+  allTasks = allTasks.map(task => {
+    if (task.id === id) {
+      return { ...task, completed: !task.completed };
+    }
+    return task;
+  });
 
-// Añadir tarea
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const taskText = input.value.trim();
-  if (taskText !== '') {
-    addTask(taskText);
-    input.value = '';
-  }
-});
+  insertTasks();
+};
 
-// Marcar tarea como completada
-listContainer.addEventListener('change', function (e) {
-  const id = parseInt(e.target.id);
-  toggleTask(id);
-});
+const deleteTask = id => {
+  allTasks = allTasks.filter(task => task.id !== id);
+  insertTasks();
+};
 
-// Eliminar tarea
-listContainer.addEventListener('click', function (e) {
-  if (e.target.classList.contains('cross')) {
-    const id = parseInt(e.target.dataset.id);
-    deleteTask(id);
-  }
-});
+const clearCompleted = () => {
+  allTasks = allTasks.filter(task => !task.completed);
+  insertTasks();
+};
 
-// Limpiar completadas
-taskClear.addEventListener('click', function () {
-  clearCompletedTasks();
-});
+const updateTaskCounter = () => {
+  const activeCount = allTasks.filter(task => !task.completed).length;
+  taskCounterElement.textContent =
+    activeCount === 0 ? 'No hay tareas' : `${activeCount} tareas activas`;
+};
 
-// Filtrar tareas
-filters.addEventListener('click', function (e) {
-  if (e.target.tagName === 'BUTTON') {
-    setFilter(e.target.dataset.filter);
-  }
-});
+const changeTheme = () => {
+  darkMode = !darkMode;
+  document.body.classList.toggle('dark');
+  modeChangeElement.src = darkMode
+    ? './images/icon-sun.svg'
+    : './images/icon-moon.svg';
+};
+
+const setFilter = event => {
+  if (!event.target.dataset.filter) return;
+  currentFilter = event.target.dataset.filter;
+  insertTasks();
+};
+
+// --------------------- EVENTOS ---------------------
+
+formElement.addEventListener('submit', createTask);
+clearCompletedButton.addEventListener('click', clearCompleted);
+modeChangeElement.addEventListener('click', changeTheme);
+filtersElement.addEventListener('click', setFilter);
