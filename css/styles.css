@@ -20,27 +20,27 @@ nav ul {
 }
 body {
   margin: 0;
-  font-family: "Lexend Deca", sans-serif;
-  color: #9495A5;
+  font-family: 'Lexend Deca', sans-serif;
+  color: #9495a5;
 }
-.header{
+.header {
   background-image: url(../images/bg-mobile-light.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 200px
+  height: 200px;
 }
-.icon-moon{
+.icon-moon {
   width: 19px;
   height: 20px;
 }
-.container-title{
+.container-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   padding: 48px 24px;
 }
-.main{
+.main {
   position: absolute;
   top: 122px;
 }
@@ -49,7 +49,7 @@ body {
   color: grey;
 }
 .label-todolist::before {
-  content: "";
+  content: '';
   position: absolute;
   border: solid 1px grey;
   border-radius: 50px;
@@ -58,7 +58,7 @@ body {
   top: -3px;
   right: 310px;
 }
-.text-todolist{
+.text-todolist {
   height: 51px;
   width: 327px;
   border-radius: 5px;
@@ -68,14 +68,14 @@ body {
   outline: none;
   border: none;
 }
-.containerList{
+.containerList {
   display: flex;
   align-items: center;
   justify-content: space-around;
   height: 51px;
   margin: 0 24px 16px;
 }
-.buttonFilters{
+.buttonFilters {
   height: 48px;
   margin: 0 24px;
   display: flex;
@@ -87,34 +87,38 @@ body {
   border: none;
   cursor: pointer;
 }
-.intructionReorderList{
+.buttonCheck {
+  color: blueviolet;
+  font-weight: 700;
+}
+.intructionReorderList {
   display: flex;
   justify-content: center;
   padding-top: 40px;
 }
-.checkBox{
+.checkBox {
   display: flex;
   align-items: center;
-  color:grey;
+  color: grey;
   background-color: purple;
   padding: 20px;
   margin: 0 24px;
   height: 52px;
   border-radius: 5px 5px 0 0;
 }
-.input-checkBox{
-display: none;
+.input-checkBox {
+  display: none;
 }
 
 .input-checkBox:checked + .input-checkBox::before {
-  content: "";
+  content: '';
   border: none;
   background: rgb(107, 255, 248);
   width: 24px;
   height: 24px;
 }
 .input-checkBox:checked + .input-checkBox::after {
-  content: "";
+  content: '';
   position: absolute;
   background-image: url(../images/icon-check.svg);
   background-size: contain;
@@ -123,18 +127,17 @@ display: none;
   height: 10px;
   left: -3px;
   top: 2px;
-  
 }
 .input-checkBox:checked + .input-checkBox {
   text-decoration: line-through;
 }
-.textLabel{
+.textLabel {
   position: relative;
   padding-left: 25px;
   display: inline-block;
 }
-.textLabel::before{
-  content: "";
+.textLabel::before {
+  content: '';
   position: absolute;
   border: 1px solid grey;
   width: 20px;
@@ -143,7 +146,7 @@ display: none;
   left: 10px;
   top: 10px;
 }
-.cross{
+.cross {
   margin-left: auto;
   width: 12px;
   height: 12px;

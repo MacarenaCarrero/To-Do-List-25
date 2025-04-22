@@ -104,9 +104,13 @@ const changeTheme = () => {
 };
 
 const setFilter = event => {
-  if (!event.target.dataset.filter) return;
-  currentFilter = event.target.dataset.filter;
-  insertTasks();
+  const filter = event.target.dataset.filter;
+  if (!filter) return;
+
+  filtersElement.querySelector('.buttonCheck').classList.remove('buttonCheck');
+  event.target.classList.add('buttonCheck');
+
+  insertTasks(filter);
 };
 
 // --------------------- EVENTOS ---------------------
