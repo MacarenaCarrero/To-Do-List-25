@@ -104,13 +104,14 @@ const changeTheme = () => {
 };
 
 const setFilter = event => {
+  // cambiar colores
   const filter = event.target.dataset.filter;
   if (!filter) return;
 
   filtersElement.querySelector('.buttonCheck').classList.remove('buttonCheck');
   event.target.classList.add('buttonCheck');
 
-  insertTasks(filter);
+  insertTasks(filter); // llamo a la funcion que filtra
 };
 
 // --------------------- EVENTOS ---------------------
