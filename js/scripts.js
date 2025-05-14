@@ -4,13 +4,11 @@ const todoListElement = document.getElementById('list');
 const taskCounterElement = document.getElementById('taskCounter');
 const clearCompletedButton = document.getElementById('taskClear');
 const filtersElement = document.getElementById('filters');
-const modeChangeElement = document.querySelector('.moon'); // la imagen del icono de modo
+const modeChangeElement = document.querySelector('.moon');
 
 let allTasks = [];
 let darkMode = false;
 let currentFilter = 'all';
-
-// --------------------- FUNCIONES ---------------------
 
 const createTask = event => {
   event.preventDefault();
@@ -111,10 +109,8 @@ const setFilter = event => {
   filtersElement.querySelector('.buttonCheck').classList.remove('buttonCheck');
   event.target.classList.add('buttonCheck');
 
-  insertTasks(filter); // llamo a la funcion que filtra
+  insertTasks(filter);
 };
-
-// --------------------- EVENTOS ---------------------
 
 formElement.addEventListener('submit', createTask);
 clearCompletedButton.addEventListener('click', clearCompleted);
