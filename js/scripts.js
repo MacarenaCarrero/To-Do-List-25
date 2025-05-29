@@ -1,118 +1,123 @@
-const formElement = document.getElementById('form');
-const inputElement = document.getElementById('text-todolist');
-const todoListElement = document.getElementById('list');
-const taskCounterElement = document.getElementById('taskCounter');
-const clearCompletedButton = document.getElementById('taskClear');
-const filtersElement = document.getElementById('filters');
-const modeChangeElement = document.querySelector('.moon');
+const containerElement = document.getElementById('container');
+const allButtomElement = document.getElementById('all');
+const activeButtomElement = document.getElementById('active');
+const completedButtomElement = document.getElementById('completed');
+const taskElement = document.getElementById('task');
+const containerTasksElement = document.getElementById('containerTasks');
+const formTask = document.getElementById('formTask');
+const containerInfoElement = document.getElementById('containerInfo');
 
-let allTasks = [];
-let darkMode = false;
-let currentFilter = 'all';
-
-const createTask = event => {
-  event.preventDefault();
-  if (inputElement.value === '') return;
-
-  allTasks.push({
+const tasks = [
+  {
     id: Date.now(),
-    name: inputElement.value,
+    name: 'Make a todo app',
+    completed: false
+  }
+];
+
+const pressButtomFilters = e => {
+  let filterTasks = [...tasks];
+  if (e.target.id === 'all') {
+    allButtomElement.classList.add('select');
+    activeButtomElement.classList.remove('select');
+    completedButtomElement.classList.remove('select');
+  }
+  if (e.target.id === 'active') {
+    activeButtomElement.classList.add('select');
+    allButtomElement.classList.remove('select');
+    completedButtomElement.classList.remove('select');
+    filterTasks = filterTasks.filter(filterTask => {
+      return !filterTask.completed;
+    });
+  }
+  if (e.target.id === 'completed') {
+    completedButtomElement.classList.add('select');
+    allButtomElement.classList.remove('select');
+    activeButtomElement.classList.remove('select');
+    filterTasks = filterTasks.filter(filterTask => {
+      return filterTask.completed;
+    });
+  }
+  updateTasks(filterTasks);
+};
+
+const publishTask = e => {
+  e.preventDefault();
+  tasks.push({
+    id: Date.now(),
+    name: taskElement.value,
     completed: false
   });
 
-  insertTasks();
+  taskElement.value = '';
+  updateTasks(tasks);
 };
 
-const insertTasks = () => {
-  todoListElement.textContent = '';
-  inputElement.value = '';
+const updateTasks = arrayTasks => {
+  const fragment = document.createDocumentFragment();
+  containerInfoElement.textContent = '';
 
-  let filteredTasks = allTasks;
+  arrayTasks.map(task => {
+    const containerTasks = document.createElement('div');
+    containerTasks.classList.add('containerTasks');
 
-  if (currentFilter === 'active') {
-    filteredTasks = allTasks.filter(task => !task.completed);
-  } else if (currentFilter === 'completed') {
-    filteredTasks = allTasks.filter(task => task.completed);
+    const flexCheckText = document.createElement('div');
+    flexCheckText.classList.add('flexCheckText');
+
+    const inputTasks = document.createElement('input');
+    inputTasks.setAttribute('type', 'checkbox'); //para agregar cualquier atributo (hacer checkbox)
+    inputTasks.setAttribute('data-id', `${task.id}`);
+    inputTasks.classList.add('checkbox');
+    if (task.completed) {
+      inputTasks.checked = true;
+    } else {
+      inputTasks.checked = false;
+    }
+
+    const textTasks = document.createElement('h2');
+    textTasks.classList.add('h2');
+    if (task.completed) {
+      textTasks.classList.add('line-through');
+    } else {
+      textTasks.classList.remove('line-through');
+    }
+    textTasks.textContent = task.name;
+
+    const imgTasks = document.createElement('img');
+    imgTasks.classList.add('cross');
+    imgTasks.textContent = task.id;
+
+    flexCheckText.append(containerTasks, inputTasks, textTasks);
+
+    fragment.append(flexCheckText, imgTasks);
+  });
+  containerInfoElement.prepend(fragment);
+};
+
+const activeCheck = event => {
+  const id = event.target.dataset.id;
+
+  if (!id) {
+    return;
   }
 
-  filteredTasks.forEach(task => {
-    const taskContainer = document.createElement('div');
-    taskContainer.classList.add('task-container');
-    taskContainer.dataset.id = task.id;
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.classList.add('input-checkBox');
-    checkbox.checked = task.completed;
-    checkbox.dataset.id = task.id;
-    checkbox.id = task.id;
-    checkbox.addEventListener('click', () => toggleTask(task.id));
-
-    const label = document.createElement('label');
-    label.classList.add('textLabel');
-    label.htmlFor = task.id;
-    label.textContent = task.name;
-
-    const deleteButton = document.createElement('img');
-    deleteButton.classList.add('cross');
-    deleteButton.src = './images/icon-cross.svg';
-    deleteButton.alt = 'Eliminar tarea';
-    deleteButton.addEventListener('click', () => deleteTask(task.id));
-
-    taskContainer.append(checkbox, label, deleteButton);
-    todoListElement.append(taskContainer);
+  const findTask = tasks.find(task => {
+    return task.id === Number(id);
   });
 
-  updateTaskCounter();
+  if (!findTask.completed) {
+    findTask.completed = true;
+  } else {
+    findTask.completed = false;
+  }
+
+  updateTasks(tasks);
+  console.log(findTask);
 };
+updateTasks(tasks);
 
-const toggleTask = id => {
-  allTasks = allTasks.map(task => {
-    if (task.id === id) {
-      return { ...task, completed: !task.completed };
-    }
-    return task;
-  });
-
-  insertTasks();
-};
-
-const deleteTask = id => {
-  allTasks = allTasks.filter(task => task.id !== id);
-  insertTasks();
-};
-
-const clearCompleted = () => {
-  allTasks = allTasks.filter(task => !task.completed);
-  insertTasks();
-};
-
-const updateTaskCounter = () => {
-  const activeCount = allTasks.filter(task => !task.completed).length;
-  taskCounterElement.textContent =
-    activeCount === 0 ? 'No hay tareas' : `${activeCount} tareas activas`;
-};
-
-const changeTheme = () => {
-  darkMode = !darkMode;
-  document.body.classList.toggle('dark');
-  modeChangeElement.src = darkMode
-    ? './images/icon-sun.svg'
-    : './images/icon-moon.svg';
-};
-
-const setFilter = event => {
-  // cambiar colores
-  const filter = event.target.dataset.filter;
-  if (!filter) return;
-
-  filtersElement.querySelector('.buttonCheck').classList.remove('buttonCheck');
-  event.target.classList.add('buttonCheck');
-
-  insertTasks(filter);
-};
-
-formElement.addEventListener('submit', createTask);
-clearCompletedButton.addEventListener('click', clearCompleted);
-modeChangeElement.addEventListener('click', changeTheme);
-filtersElement.addEventListener('click', setFilter);
+formTask.addEventListener('submit', publishTask);
+allButtomElement.addEventListener('click', pressButtomFilters);
+activeButtomElement.addEventListener('click', pressButtomFilters);
+completedButtomElement.addEventListener('click', pressButtomFilters);
+containerElement.addEventListener('click', activeCheck);

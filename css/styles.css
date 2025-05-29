@@ -20,135 +20,151 @@ nav ul {
 }
 body {
   margin: 0;
-  font-family: 'Lexend Deca', sans-serif;
-  color: #9495a5;
-}
-.header {
-  background-image: url(../images/bg-mobile-light.jpg);
+  font-family: 'Josefin Sans';
+  color: #494c6b;
+  background-image: url('/assets/image/bg-mobile-light.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
-  height: 200px;
+  padding: 24px;
+  background-color: #fafafa;
 }
-.icon-moon {
-  width: 19px;
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.logo {
+  color: #ffffff;
+}
+
+.labelText {
+  width: 20px;
   height: 20px;
+  border-radius: 50%;
+  border: 1px solid #979797;
 }
-.container-title {
+
+.task {
+  padding: 18px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
-  padding: 48px 24px;
+  margin-bottom: 40px;
+  margin-top: 24px;
 }
-.main {
-  position: absolute;
-  top: 122px;
-}
-.label-todolist {
-  position: relative;
-  color: grey;
-}
-.label-todolist::before {
-  content: '';
-  position: absolute;
-  border: solid 1px grey;
-  border-radius: 50px;
+
+.icon {
   width: 20px;
-  height: 20px;
-  top: -3px;
-  right: 310px;
 }
-.text-todolist {
-  height: 51px;
-  width: 327px;
+
+.formText {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
-  margin: 0 18px 16px;
-  padding-left: 52px;
-  bottom: 86px;
-  outline: none;
-  border: none;
 }
-.containerList {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  height: 51px;
-  margin: 0 24px 16px;
+
+.h2 {
+  font-size: 16px;
+  font-weight: 400;
 }
-.buttonFilters {
-  height: 48px;
-  margin: 0 24px;
+
+.flexCheckText {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 12px;
 }
-.button {
-  background-color: inherit;
-  color: inherit;
-  border: none;
-  cursor: pointer;
+
+.cross {
+  width: 12px;
 }
-.buttonCheck {
-  color: blueviolet;
+.containerInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+  padding: 16px 20px;
+  width: 100%;
+  gap: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.containerTasks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.items,
+.clear {
+  font-size: 12px;
+  color: #9495a5;
+}
+
+.footerTasks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -16px;
+  gap: 100px;
+  background-color: #ffffff;
+  width: 100%;
+  border-radius: 5px;
+  padding: 16px 20px 18px 20px;
+  border-top: 1px solid #e3e4f1;
+  box-shadow: 0px 35px 70px #c2c3d6;
+}
+
+.optionsfilters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 19px;
+  background-color: #ffffff;
+  width: 100%;
+  border-radius: 5px;
+  padding: 15px 80px;
+  border-top: 1px solid #e3e4f1;
+  box-shadow: 0px 35px 70px #c2c3d6;
+}
+
+.all,
+.active,
+.completed {
   font-weight: 700;
+  color: #9495a5;
+  border: none;
+  background-color: transparent;
 }
-.intructionReorderList {
+
+.select {
+  color: #3a7cfd;
+}
+
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding-top: 40px;
-}
-.checkBox {
-  display: flex;
   align-items: center;
-  color: grey;
-  background-color: purple;
-  padding: 20px;
-  margin: 0 24px;
-  height: 52px;
-  border-radius: 5px 5px 0 0;
+  gap: 16px;
 }
-.input-checkBox {
+.element-disable {
   display: none;
 }
 
-.input-checkBox:checked + .input-checkBox::before {
-  content: '';
-  border: none;
-  background: rgb(107, 255, 248);
-  width: 24px;
-  height: 24px;
-}
-.input-checkBox:checked + .input-checkBox::after {
-  content: '';
-  position: absolute;
-  background-image: url(../images/icon-check.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 10px;
-  height: 10px;
-  left: -3px;
-  top: 2px;
-}
-.input-checkBox:checked + .input-checkBox {
+.line-through {
   text-decoration: line-through;
-}
-.textLabel {
-  position: relative;
-  padding-left: 25px;
-  display: inline-block;
-}
-.textLabel::before {
-  content: '';
-  position: absolute;
-  border: 1px solid grey;
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  left: 10px;
-  top: 10px;
-}
-.cross {
-  margin-left: auto;
-  width: 12px;
-  height: 12px;
-  cursor: pointer;
 }
